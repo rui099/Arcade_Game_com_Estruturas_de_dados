@@ -1,6 +1,6 @@
 {
-  "cod-missao": "pata de coelhoo",
-  "versao": 1,
+  "cod-missao": "Rogue Nation",
+  "versao": 2,
   "edificio": [
     "Heliporto",
     "Escada 6",
@@ -119,7 +119,7 @@
     {
       "nome": "badguy2",
       "poder": 15,
-      "divisao": "Escada de Emergência"
+      "divisao": "Heliporto"
     },
     {
       "nome": "badguy3",
@@ -134,17 +134,20 @@
     {
       "nome": "badguy5",
       "poder": 15,
-      "divisao": "Garagem"
+      "divisao": "Corredor 1"
     }
   ],
-  "entradas-saidas": [
-    "Escada de Emergência",
+  "entradas": [
     "Garagem",
+    "Heliporto"
+  ],
+  "saidas": [
+    "Escada de Emergência",
     "Heliporto",
     "Porteiro"
   ],
   "alvo": {
-    "divisao": "Escritório 1",
-    "tipo": "documento"
+    "divisao": "Laboratório",
+    "tipo": "quimico"
   }
 }

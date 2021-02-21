@@ -185,6 +185,10 @@ public class ArrayList<T> implements ListADT<T> {
                 '}';
     }
 
+    public T get(int index){
+        return array[index];
+    }
+
     @Override
     public Iterator<T> iterator() {
         return new BasicIterator();

@@ -72,10 +72,13 @@ public class Divisao{
          * @return
          */
 
-    public Iterator<Divisao> getLigacoes() {
+    public Iterator<Divisao> getLigacoesIT() {
         return ligacoes.iterator();
     }
 
+        public ArrayUnorderedList<Divisao> getLigacoes() {
+            return ligacoes;
+        }
         /**
          * Método Responsável por retornar os inimigos existentes.
          * @return

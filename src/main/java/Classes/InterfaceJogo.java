@@ -2,8 +2,12 @@
 
     import Exceptions.EmptyCollectionException;
     import Exceptions.InvalidMapException;
+
+    import java.io.BufferedReader;
     import java.io.File;
     import java.io.IOException;
+    import java.io.InputStreamReader;
+    import java.util.Iterator;
     import java.util.Scanner;
 
     /**
@@ -55,7 +59,6 @@
                  */
 
                 case 1: {
-
                     this.jogo = new Jogo(jogador);
                     System.out.println("Nome: ");
                     nome = scanner.next();
@@ -63,21 +66,13 @@
                             System.out.println("Tem de Introduzir um Nome!");
                         }
                     this.jogador.setNome(nome);
-                    boolean mapaValido = false;
-                        while(!mapaValido) {
-                            System.out.println("Escolha o Mapa ");
-                            printMapas();
-                            nome = scanner.next();
-                            String path = "mapas/" + nome;
-                            file = new File(path);
-                                 if (file.exists()) {
-                                    this.jogo.setMap(path);
-                                    mapaValido = true;
-                                    jogar();
-                                 }
-                            System.out.println("Ficheiro Invalido");
-                        }
-
+                    System.out.println("MISSÕES:");
+                    Missao missao = pedirMissao();
+                    jogo.setMissao(missao);
+                    System.out.println("MAPAS:");
+                    Map mapa = pedirMapa(missao);
+                    jogo.setMap(mapa);
+                    jogar();
                 }
 
                 /**
@@ -142,21 +137,10 @@
                 }
 
                 case 3: {
-
+                    Map mapa = pedirMapa(jogo.getMissao());
+                    jogo.setMap(mapa);
                     boolean mapaValido = false;
-                    while(!mapaValido) {
-                        System.out.println("Escolha o Mapa ");
-                        printMapas();
-                        nome = scanner.next();
-                        String path = "mapas/" + nome;
-                        file = new File(path);
-                        if (file.exists()) {
-                            this.jogo.setMap(path);
-                            mapaValido = true;
-                            jogar();
-                        }
-                        System.out.println("Ficheiro Invalido");
-                    }
+
 
                 }
 
@@ -166,7 +150,7 @@
 
                 case 4: {
 
-                    classif.printClassificacoes(jogo.getMap().getCod_missao());
+                    classif.printClassificacoes(jogo.getMap());
                     jogar();
                 }
 
@@ -206,5 +190,70 @@
                 }
             }
 
+        }
+
+
+        private boolean isNumber(String s) {
+            for (int i = 0; i < s.length(); i++) {
+                if (s == "")
+                    return false;
+                if (Character.isDigit(s.charAt(i)) == false)
+                    return false;
+            }
+            return true;
+        }
+
+        public Missao pedirMissao() throws IOException, InvalidMapException {
+            boolean found = false;
+            GestorDeMissoes gestorMissoes = new GestorDeMissoes();
+            gestorMissoes.organizarMissoes();
+            gestorMissoes.getMissoes();
+            Missao missaoEscolhida = null;
+            while(!found) {
+
+                Iterator it0 = gestorMissoes.getMissoes().iterator();
+                int index = 0;
+                while (it0.hasNext()) {
+                    Missao missao = (Missao) it0.next();
+                    System.out.println("<" + index + "> " + missao.getCod_missao() + "  ");
+                    index++;
+                }
+                System.out.println("\nEscolha a missao");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                String input = reader.readLine();
+
+                if (isNumber(input) && Integer.parseInt(input) < gestorMissoes.getMissoes().size()) {
+                    found = true;
+                    missaoEscolhida = gestorMissoes.getMissoes().get(Integer.parseInt(input));
+                } else {
+                    System.out.println("Numero de missao invalido ");
+                }
+            }
+            return missaoEscolhida;
+        }
+
+        public Map pedirMapa(Missao missao) throws IOException {
+            boolean found = false;
+            Map mapaEscolhido = null;
+            while(!found) {
+                Iterator it0 = missao.getMapasDaMissao().iterator();
+                int index = 0;
+                while (it0.hasNext()) {
+                    Map mapa = (Map) it0.next();
+                    System.out.println("<" + index + "> " + mapa.getCod_missao() + " " + mapa.getVersao() + "  ");
+                    index++;
+                }
+                System.out.println("\nEscolha o mapa");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                String input = reader.readLine();
+
+                if (isNumber(input) && Integer.parseInt(input) < missao.getMapasDaMissao().size()) {
+                    found = true;
+                    mapaEscolhido = missao.getMapasDaMissao().get(Integer.parseInt(input));
+                } else {
+                    System.out.println("Numero de Mapa invalido ");
+                }
+            }
+            return mapaEscolhido;
         }
     }

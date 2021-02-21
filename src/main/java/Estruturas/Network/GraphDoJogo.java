@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 public class GraphDoJogo<T> extends Graph<T> {
 
-    protected Iterator<T> dijkstraShortestPath(T startVertex, T endVertex,ArrayUnorderedList<Divisao> divisoes) throws UnsupportedDataTypeException, EmptyCollectionException {
+    protected Iterator<T> dijkstraShortestPath(Divisao startVertex, Divisao endVertex,ArrayUnorderedList<Divisao> divisoes) throws UnsupportedDataTypeException, EmptyCollectionException {
         int startIndex = ArrayUtils.indexOf(vertices, startVertex);
         int endIndex = ArrayUtils.indexOf(vertices, endVertex);
 
@@ -63,7 +63,7 @@ public class GraphDoJogo<T> extends Graph<T> {
         }
 
         int lastIndexOfStart;
-        lastIndexOfStart = pathVertices.lastIndexOf(startVertex);
+        lastIndexOfStart = pathVertices.lastIndexOf((T) startVertex);
         for (int i = lastIndexOfStart - 1; i >= 0; i--) {
 
             pathVertices.removeIndex(i);
@@ -86,40 +86,45 @@ public class GraphDoJogo<T> extends Graph<T> {
         return minIndex;
     }
 
-    public Iterator<T> dijkstraShortestPathTotalEntrada(T startVertex, T[] arrayEnds,ArrayUnorderedList<Divisao> divisoes) throws UnsupportedDataTypeException, EmptyCollectionException {
+    public Iterator<T> dijkstraShortestPathTotalEntrada(Divisao startVertex, ArrayUnorderedList<Divisao> arrayEnds,ArrayUnorderedList<Divisao> divisoes) throws UnsupportedDataTypeException, EmptyCollectionException {
         int melhorResultado = Integer.MAX_VALUE;
         Iterator<T> melhorIterator = null;
-        for (int i = 0; i < arrayEnds.length; i++) {
+        Iterator it0 = arrayEnds.iterator();
+        while (it0.hasNext()) {
+            Divisao entrada = (Divisao) it0.next();
             int tempResult = 0;
-            Iterator it1 = dijkstraShortestPath(arrayEnds[i], startVertex,divisoes);
+            Iterator it1 = dijkstraShortestPath(entrada, startVertex,divisoes);
             while (it1.hasNext()) {
                 Divisao obj = (Divisao) it1.next();
                 tempResult = (int) (tempResult + obj.getPoderTotal());
             }
             if (tempResult < melhorResultado) {
                 melhorResultado = tempResult;
-                melhorIterator = dijkstraShortestPath(arrayEnds[i], startVertex,divisoes);
-                System.out.println(melhorResultado);
+                melhorIterator = dijkstraShortestPath(entrada, startVertex,divisoes);
             }
         }
         return melhorIterator;
     }
 
-    public Iterator<T> dijkstraShortestPathTotalSaida(T startVertex, T[] arrayEnds,ArrayUnorderedList<Divisao> divisoes) throws UnsupportedDataTypeException, EmptyCollectionException {
+    public Iterator<T> dijkstraShortestPathTotalSaida(Divisao startVertex, ArrayUnorderedList<Divisao> arrayEnds,ArrayUnorderedList<Divisao> divisoes) throws UnsupportedDataTypeException, EmptyCollectionException {
         int melhorResultado = Integer.MAX_VALUE;
         Iterator<T> melhorIterator = null;
-        for (int i = 0; i < arrayEnds.length; i++) {
+        Iterator it0 = arrayEnds.iterator();
+        while (it0.hasNext()) {
+            Divisao saida = (Divisao) it0.next();
             int tempResult = 0;
-            Iterator it1 = dijkstraShortestPath(startVertex, arrayEnds[i],divisoes);
+            Iterator it1 = dijkstraShortestPath(startVertex, saida,divisoes);
             while (it1.hasNext()) {
                 Divisao obj = (Divisao) it1.next();
                 tempResult = (int) (tempResult + obj.getPoderTotal());
             }
             if (tempResult < melhorResultado) {
                 melhorResultado = tempResult;
-                melhorIterator = dijkstraShortestPath(startVertex, arrayEnds[i],divisoes);
-                System.out.println(melhorResultado);
+                melhorIterator = dijkstraShortestPath(startVertex, saida,divisoes);
             }
+
+
+
         }
         return melhorIterator;
     }

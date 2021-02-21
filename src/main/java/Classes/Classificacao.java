@@ -39,15 +39,15 @@ public class Classificacao {
 
         /**
          * Método Responsável por guardar a informação das pontuações em ficheiro JSON
-         * @param codMissao - nome da missão
+         * @param mapa - referencia da mapa
          * @param jogador
          * @throws IOException - Excepção para o caso de ter falhado I/O
          * @throws EmptyCollectionException - Excepção para o caso de a coleção estar vazia.
          */
 
-    public void guardarClassificacao(String codMissao,Jogador jogador) throws IOException, EmptyCollectionException {
+    public void guardarClassificacao(Map mapa,Jogador jogador) throws IOException, EmptyCollectionException {
 
-        getFile(codMissao);
+        getFile(mapa);
         addPontuacao(jogador);
         FileWriter writer = new FileWriter(file);
         BufferedWriter bw = new BufferedWriter(writer);
@@ -73,17 +73,17 @@ public class Classificacao {
 
         /**
          * Método Responsável por imprimir na consola a classificação de um determinado mapa.
-         * @param codMissao
+         * @param mapa
          * @throws IOException - Excepção para o caso de I/O falhar
          * @throws EmptyCollectionException - Excepção para o caso de a coleção estar vazia.
          */
 
-    public void printClassificacoes(String codMissao) throws IOException, EmptyCollectionException{
+    public void printClassificacoes(Map mapa) throws IOException, EmptyCollectionException{
 
-        getFile(codMissao);
+        getFile(mapa);
         reader();
         Iterator itj = orderedClassificacoes.iterator();
-        System.out.println("Missao: " + codMissao);
+        System.out.println("Missao: " + mapa.getCod_missao() + "versao " + mapa.getVersao());
         int pos = 0;
         while (itj.hasNext()) {
             Jogador obj = (Jogador) itj.next();
@@ -111,18 +111,17 @@ public class Classificacao {
                 orderedClassificacoes.add(jos);
             }
         }
-
     }
 
         /**
          * Método Responsável por criar o ficheiro de classificações
-         * @param codMissao - nome do mapa
+         * @param mapa - referencia do mapa
          * @throws IOException - Excepção para o caso de I/O falhar
          */
 
-    private void getFile(String codMissao) throws IOException {
+    private void getFile(Map mapa) throws IOException {
 
-        String path = "classificacao/Classificacao_" + codMissao + ".json";
+        String path = "classificacao/Classificacao_" + mapa.getCod_missao() + "_" + mapa.getVersao() + ".json";
         file = new File(path);
 
         if (!file.exists()) {

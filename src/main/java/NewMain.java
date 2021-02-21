@@ -1,17 +1,10 @@
-import Classes.Divisao;
 import Classes.InterfaceJogo;
-import Classes.Jogo;
-import Classes.Mapa;
-import Estruturas.Lists.ArrayUnorderedList.ArrayUnorderedList;
-import Estruturas.Network.Graph;
-import Estruturas.Network.Network;
 import Exceptions.EmptyCollectionException;
 import Exceptions.InvalidMapException;
 
 import javax.activation.UnsupportedDataTypeException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -83,7 +76,7 @@ public class NewMain {
         System.out.println("peso do camiho djikstra");
         System.out.println(nt.minimalPath("aaaaaa", "bbbbbb"));
         //nt.shortestPathWeight("aaaaaa", "bbbbbb");
-        
+
         Iterator it3 = nt.getShortestPath("aaaaaa", "bbbbbb");
         System.out.println("camiho djikstra");
         while (it3.hasNext()) {
@@ -92,29 +85,7 @@ public class NewMain {
         }
 */
         try {
-            /*
-            Mapa mapa = Mapa.importMap("C:\\Users\\Rafael Costa\\Desktop\\ED_Grupo_13_TP\\grupo_13_ed\\Mapa.json");
-            mapa.CriarNetworkDoJogo();
-            System.out.println(mapa.getNetworkDoJogo().isConnected());
 
-            Iterator itj = mapa.getShortesPathMapa("Garagem", "Heliporto");
-            System.out.println("camiho djikstra");
-
-            while (itj.hasNext()) {
-                Divisao obj = (Divisao) itj.next();
-                System.out.println(obj.getNome());
-            }
-            System.out.println(mapa.getShortestCostMapa("Garagem", "Heliporto"));
-
-            System.out.println(mapa.getNetworkDoJogo().toString());
-
-            System.out.println(mapa.verificarEntradaSaida("Heliporto"));
-            Jogo jogo = new Jogo();
-            jogo.setMap("C:\\Users\\Rafael Costa\\Desktop\\ED_Grupo_13_TP\\grupo_13_ed\\Mapa.json");
-            //jogo.modoAutomatico("Heliporto", "Heliporto");
-            jogo.modoManual();
-            //Classificacao2.guardarClassificacao("Conaça");
-*/
             InterfaceJogo ij = new InterfaceJogo();
             ij.menuInicial();
 

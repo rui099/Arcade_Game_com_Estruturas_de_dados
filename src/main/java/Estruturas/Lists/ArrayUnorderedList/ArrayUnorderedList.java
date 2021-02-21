@@ -108,7 +108,5 @@ public class ArrayUnorderedList<T> extends ArrayList<T> implements UnorderedList
         return pos;
     }
 
-    public T get(int index){
-        return array[index];
-    }
+
 }
